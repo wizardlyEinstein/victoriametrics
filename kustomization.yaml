@@ -8,7 +8,11 @@ helmCharts:
     includeCRDs: true 
     valuesInline:
       server:
+        service:
+          type: LoadBalancer
         persistentVolume:
+          enabled: false
+        statefulSet:
           enabled: false
     releaseName: metrics 
     version: 0.9.26 
@@ -17,7 +21,7 @@ helmCharts:
 patches:
   - patch: |
       apiVersion: apps/v1
-      kind: StatefulSet
+      kind: Deployment
       metadata:
         name: metrics-victoria-metrics-single-server
       spec:
@@ -28,7 +32,7 @@ patches:
                 $patch: delete
   - patch: |
       apiVersion: apps/v1
-      kind: StatefulSet
+      kind: Deployment
       metadata:
         name: metrics-victoria-metrics-single-server
       spec:
