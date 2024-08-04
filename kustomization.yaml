@@ -1,0 +1,41 @@
+namespace: metrics
+
+resources:
+  - namespace.yaml
+
+helmCharts:
+  - name: victoria-metrics-single 
+    includeCRDs: true 
+    valuesInline:
+      server:
+        persistentVolume:
+          enabled: false
+    releaseName: metrics 
+    version: 0.9.26 
+    repo: https://victoriametrics.github.io/helm-charts/ 
+
+patches:
+  - patch: |
+      apiVersion: apps/v1
+      kind: StatefulSet
+      metadata:
+        name: metrics-victoria-metrics-single-server
+      spec:
+        template:
+          spec:
+            volumes:
+              - name: server-volume 
+                $patch: delete
+  - patch: |
+      apiVersion: apps/v1
+      kind: StatefulSet
+      metadata:
+        name: metrics-victoria-metrics-single-server
+      spec:
+        template:
+          spec:
+            volumes:
+              - name: server-volume 
+                hostPath:
+                  path: /ssd/k3s/victoriametrics/data/
+                  type: Directory
