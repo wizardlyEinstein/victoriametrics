@@ -26,10 +26,18 @@ patches:
       metadata:
         name: metrics-victoria-metrics-single-server
       spec:
+        strategy:
+          type: Recreate
+  - patch: |
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: metrics-victoria-metrics-single-server
+      spec:
         template:
           spec:
             volumes:
-              - name: server-volume 
+              - name: server-volume
                 $patch: delete
   - patch: |
       apiVersion: apps/v1
