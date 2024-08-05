@@ -8,6 +8,7 @@ helmCharts:
     includeCRDs: true 
     valuesInline:
       server:
+        retentionPeriod: 120
         service:
           type: LoadBalancer
         persistentVolume:
