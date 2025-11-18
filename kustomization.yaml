@@ -50,5 +50,5 @@ patches:
             volumes:
               - name: server-volume 
                 hostPath:
-                  path: /ssd/k3s/victoriametrics/data/
+                  path: /hdd/k3s/victoriametrics/data/
                   type: Directory
